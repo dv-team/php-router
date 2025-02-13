@@ -1,0 +1,10 @@
+/*
+!/src
+!/tests
+!/.gitignore
+!/composer.json
+!/phpstan.neon
+!/README.md
+!/rector.php
+!/tests.xml
+!/tests.php
