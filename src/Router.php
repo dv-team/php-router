@@ -278,12 +278,10 @@ class Router {
 	/**
 	 * @template T
 	 * @param array<string, mixed>|array{alias?: string, ctrl?: string, method?: string} $arguments
-	 * @param callable(): T $inner
+	 * @param callable(Router):T $inner
 	 * @return T
 	 */
 	public function enterContext(array $arguments, callable $inner) {
-		$existsAndIsString = static fn(string $key): bool => array_key_exists($key, $arguments) && is_string($arguments[$key]);
-		
 		// Expand missing arguments
 		if(is_string($arguments['alias'] ?? null)) {
 			$data = $this->alias[$arguments['alias']];
@@ -304,7 +302,7 @@ class Router {
 			}
 			$arguments = array_merge($prev, $arguments);
 			$this->stack[] = $arguments;
-			return $inner();
+			return $inner($this);
 		} finally {
 			array_pop($this->stack);
 		}
